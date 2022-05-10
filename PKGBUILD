@@ -55,7 +55,9 @@ package() {
     install -DTm755 run_wowup-native.sh "$pkgdir/usr/bin/$pkgname"
     install -Dm644 wowup-native.desktop -t "$pkgdir/usr/share/applications/"
 
-    asar e "$srcdir/$_pkgname/wowup-electron/release/linux-unpacked/resources/app.asar" "$pkgdir/usr/lib/$pkgname"
+    _dest="$pkgdir/usr/lib/$pkgname"
+    asar e "$srcdir/$_pkgname/wowup-electron/release/linux-unpacked/resources/app.asar" "$_dest"
+    rm -r "$_dest"/node_modules/{@angular,@microsoft}
 
     cd "$srcdir/$_pkgname/wowup-electron/"
     install -Dm644 assets/wowup_logo_512np.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/$pkgname.png"

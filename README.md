@@ -1,4 +1,4 @@
-# WowUp Built with Arch Linux System Electron
+# WowUp Arch Linux Native
 
 WowUp built with Arch Linux system Electron.
 
