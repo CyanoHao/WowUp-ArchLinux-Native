@@ -2,13 +2,13 @@
 
 _pkgname=WowUp
 pkgname=${_pkgname,,}-native
-_pkgver=2.7.1
-pkgver=${_pkgver/-/.}
+# _electronver=$(</usr/lib/electron/version)
+_electronver=18.2.0 # 18.2.1 missing from npmjs.com
+_pkgver=2.8.2-beta.2
+pkgver=${_pkgver/-/.}+electron.${_electronver}
 pkgrel=1
 pkgdesc='WowUp the World of Warcraft addon updater (system Electron)'
 arch=('x86_64')
-# _electronver=$(</usr/lib/electron/version)
-_electronver=18.2.0 # 18.2.1 missing from npmjs.com
 
 url='https://github.com/WowUp/WowUp'
 license=('GPL3')
@@ -23,7 +23,7 @@ makedepends=(
     'imagemagick'
 )
 source=(
-    "git+$url.git?v${_pkgver}"
+    "git+https://github.com/WowUp/WowUp.git#tag=v${_pkgver}"
     wowup-native.desktop
     run_wowup-native.sh
 )
@@ -57,7 +57,6 @@ package() {
 
     _dest="$pkgdir/usr/lib/$pkgname"
     asar e "$srcdir/$_pkgname/wowup-electron/release/linux-unpacked/resources/app.asar" "$_dest"
-    rm -r "$_dest"/node_modules/{@angular,@microsoft}
 
     cd "$srcdir/$_pkgname/wowup-electron/"
     install -Dm644 assets/wowup_logo_512np.png "$pkgdir/usr/share/icons/hicolor/512x512/apps/$pkgname.png"
