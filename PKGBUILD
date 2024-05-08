@@ -1,11 +1,11 @@
 # Maintainer: Cyano Hao <c@cyano.cn>
 
-_electron=electron28
+_electron=electron30
 _electronver=$(</usr/lib/$_electron/version)
 
 _pkgname=WowUp
 pkgname=${_pkgname,,}-native
-_pkgver=2.11.0
+_pkgver=2.12.0
 pkgver=${_pkgver/-/.}
 pkgrel=1
 pkgdesc='World of Warcraft addon updater (system Electron)'
@@ -29,7 +29,7 @@ source=(
     wowup-native.desktop
     run_wowup-native.sh
 )
-sha256sums=('5793e5ef9a94b5909c08f26252e297a100ca51697c6bf014c4d58f006a7cc876'
+sha256sums=('456a9c122d14feb0a2e4b95dd30c457a80893424b0d19cf4fda7a03faa3c0005'
             '6492656d15dc74254189767f92a3d6d73ee21d2de952ae8586a40330dc0b6ef3'
             '371d0e19917b031911ac5503e01e19170988230fb793f68e42eb15e4d1cfb97c'
             '76ebf12e022e15075a6a3824731a8288acbc6a4e1f69f6bd0fa3591d6f658656'
