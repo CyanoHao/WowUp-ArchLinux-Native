@@ -1,13 +1,13 @@
 # Maintainer: Cyano Hao <c@cyano.cn>
 
-_electron=electron30
+_electron=electron29
 _electronver=$(</usr/lib/$_electron/version)
 
 _pkgname=WowUp
 pkgname=${_pkgname,,}-native
 _pkgver=2.12.0
 pkgver=${_pkgver/-/.}
-pkgrel=1
+pkgrel=2
 pkgdesc='World of Warcraft addon updater (system Electron)'
 arch=('x86_64')
 
