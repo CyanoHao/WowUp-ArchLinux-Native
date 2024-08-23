@@ -1,13 +1,13 @@
 # Maintainer: Cyano Hao <c@cyano.cn>
 
-_electron=electron29
+_electron=electron30
 _electronver=$(</usr/lib/$_electron/version)
 
 _pkgname=WowUp
 pkgname=${_pkgname,,}-native
-_pkgver=2.12.0
+_pkgver=2.20.0
 pkgver=${_pkgver/-/.}
-pkgrel=2
+pkgrel=1
 pkgdesc='World of Warcraft addon updater (system Electron)'
 arch=('x86_64')
 
@@ -17,7 +17,7 @@ depends=(
     $_electron
 )
 makedepends=(
-    'nodejs-lts-hydrogen' # may fail with latest nodejs, use lts
+    'nodejs-lts-iron' # may fail with latest nodejs, use lts
     'npm'
     'asar'
     'imagemagick'
@@ -29,7 +29,7 @@ source=(
     wowup-native.desktop
     run_wowup-native.sh
 )
-sha256sums=('456a9c122d14feb0a2e4b95dd30c457a80893424b0d19cf4fda7a03faa3c0005'
+sha256sums=('217b44662b7136473071a9b8073ea7c2018ddec82e050e023bfdab70d0bae481'
             '6492656d15dc74254189767f92a3d6d73ee21d2de952ae8586a40330dc0b6ef3'
             '371d0e19917b031911ac5503e01e19170988230fb793f68e42eb15e4d1cfb97c'
             '76ebf12e022e15075a6a3824731a8288acbc6a4e1f69f6bd0fa3591d6f658656'
@@ -43,6 +43,10 @@ prepare() {
 
     # set legacy peer deps in .npmrc file to dependency conflict since npm 7
     echo "legacy-peer-deps=true" >>wowup-electron/.npmrc
+
+    # overwolf is impossible with system electron
+    sed -i -E '/^\s*"@overwolf\// d' wowup-electron/package.json
+    sed -i -E '/^\s*"postinstall":/ s/ow-electron-builder install-app-deps/true/' wowup-electron/package.json
 
     # disable built-in updater (package manager handles it)
     patch --forward --strip=1 --input="${srcdir}/aur-disable-updater.patch"
@@ -66,9 +70,9 @@ build() {
     npm run build:prod
     ./node_modules/.bin/electron-builder \
         --linux dir \
-        -c.nodeGypRebuild=false \
-        -c.electronDist=/usr/lib/$_electron \
-        -c.electronVersion=$_electronver
+        -c electron-build/electron-builder.json \
+        -c.electronDist="/usr/lib/$_electron" \
+        -c.electronVersion="$_electronver"
 }
 
 package() {
