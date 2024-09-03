@@ -67,10 +67,15 @@ build() {
     # export ELECTRON_MIRROR="https://npmmirror.com/mirrors/electron/"
     # npm --registry https://registry.npmmirror.com/ install electron@$_electronver <<<"N"
 
+    # electron-builder with `nodeGypRebuild=true` will fetch headers from electronjs.org,
+    # which may lead to a 404 error. Explicitly call node-gyp-rebuild to avoid it.
+    ./node_modules/.bin/electron-builder node-gyp-rebuild
+
     npm run build:prod
     ./node_modules/.bin/electron-builder \
         --linux dir \
         -c electron-build/electron-builder.json \
+        -c.nodeGypRebuild=false \
         -c.electronDist="/usr/lib/$_electron" \
         -c.electronVersion="$_electronver"
 }
